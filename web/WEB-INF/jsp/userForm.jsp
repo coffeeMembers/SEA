@@ -15,6 +15,7 @@
 </style>
 <title>Registration Page</title>
 </head>
+
 <body>
 
 	<form:form action="add.html" commandName="user">
@@ -39,19 +40,46 @@
 	<c:if test="${fn:length(userList) > 0}">
 		<table cellpadding="5">
 			<tr class="even">
+                <th>ID</th>
 				<th>Name</th>
 				<th>Password</th>
 				<th>Code</th>
+                <th>update</th>
+                <th>delete</th>
 			</tr>
 			<c:forEach items="${userList}" var="user" varStatus="status">
 				<tr class="<c:if test="${status.count % 2 == 0}">even</c:if>">
+
+                    <td>${user.id}</td>
 					<td>${user.name}</td>
 					<td>${user.code}</td>
 					<td>${user.password}</td>
+                    <td><input type="button" value="update" onclick="location.href='update.html?userId=${user.id}'"></td>
+                    <td><input type="button" value="delete" onclick="location.href='delete.html?userId=${user.id}'"></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</c:if>
+
+	<form:form action="update.html" commandName="user">
+		<table>
+			<tr>
+				<td>User Name :</td>
+				<td><form:input path="name" /></td>
+			</tr>
+			<tr>
+				<td>Password :</td>
+				<td><form:password path="password" /></td>
+			</tr>
+			<tr>
+				<td>Code :</td>
+				<td><form:textarea path="code" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="update"></td>
+			</tr>
+		</table>
+	</form:form>
 
 </body>
 </html>

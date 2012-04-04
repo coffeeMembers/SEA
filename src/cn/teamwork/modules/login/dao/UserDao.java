@@ -12,5 +12,10 @@ public interface UserDao {
 
 	public void save(User user);
 
-    List<User> findAll();
+    public void delete(Long userId);
+
+    List<User> findAllUsers();
+
+    public User findUserById(long userId);
+
 }

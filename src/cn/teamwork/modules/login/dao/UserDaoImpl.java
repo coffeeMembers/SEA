@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
 
     public User findUserByName(String name) {
-        return (User) entityManager.createQuery("select u from User u where u.name=:name")
+        return entityManager.createQuery("select u from User u where u.name=:name", User.class)
                 .setParameter("name", name).getSingleResult();
     }
 
@@ -36,21 +36,32 @@ public class UserDaoImpl implements UserDao {
         entityManager.persist(user);
     }
 
-    public List<User> findAll() {
+    @Transactional
+    public void delete(Long userId) {
+        User user = findUserById(userId);
+        entityManager.remove(user);
+    }
+
+    public List<User> findAllUsers() {
         return entityManager.createQuery("select u from User u", User.class).getResultList();
     }
 
-    public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                new String[]{"classpath*:cn/teamwork/configurations/springconfig-jpa.xml"});
-        UserDao userDao = context.getBean("userDao", UserDao.class);
+    public User findUserById(long userId) {
+        return entityManager.createQuery("select u from User u where u.id=:id", User.class)
+                .setParameter("id", userId).getSingleResult();
+    }
 
+//    public static void main(String[] args) {
+//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+//                new String[]{"classpath*:cn/teamwork/configurations/springconfig-jpa.xml"});
+//        UserDao userDao = context.getBean("userDao", UserDao.class);
+//
 //        User user = userDao.findUserByName("weihong.yin1");
 //        user.setName("test");
 //        userDao.update(user);
 //        System.out.println(user);
-
-        User newUser = new User("37502", "1234567890", "shaowei.hu");
-        userDao.save(newUser);
-    }
+//
+//        User newUser = new User("37502", "1234567890", "shaowei.hu");
+//        userDao.save(newUser);
+//    }
 }

@@ -29,8 +29,22 @@ public class UserController {
 	public ModelAndView list(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelMap modelMap = new ModelMap();
-		modelMap.addAttribute("userList", userService.findAll());
+		modelMap.addAttribute("userList", userService.findAllUsers());
 		modelMap.addAttribute("user", new User());
 		return new ModelAndView("userForm", modelMap);
 	}
+
+    @RequestMapping("/user/update.html")
+    public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Long userId) throws Exception {
+        User user = userService.findUserById(userId);
+        user.setName("llllllllll");
+        userService.update(user);
+        return new ModelAndView("redirect:list.html");
+    }
+
+    @RequestMapping("/user/delete.html")
+    public ModelAndView delete(HttpServletRequest request, HttpServletResponse response, Long userId) throws Exception {
+        userService.delete(userId);
+        return new ModelAndView("redirect:list.html");
+    }
 }
