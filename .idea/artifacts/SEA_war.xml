@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="SEA:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/SEA_war</output-path>
+    <root id="archive" name="SEA_war.war">
+      <element id="artifact" artifact-name="SEA:war exploded" />
+    </root>
+  </artifact>
+</component>
